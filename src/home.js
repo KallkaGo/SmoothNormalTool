@@ -1,3 +1,4 @@
+
 import $ from 'jquery'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/Addons.js'
@@ -10,6 +11,12 @@ input.type = 'file'
 input.addEventListener('change', (evnet) => {
   evnet.stopPropagation()
   const file = event.target.files[0]
+  if (!handleDone) {
+    Firefly.showToast('Please wait for the previous operation to complete')
+    input.value = ''
+    return
+  }
+  handleDone = false
   if (file) {
     const reader = new FileReader()
     reader.onload = function (event) {
@@ -41,9 +48,7 @@ input.addEventListener('change', (evnet) => {
 
         },
           function (error) {
-
-            console.log('An error happened during parsing', error)
-
+            Firefly.showToast(`An error happened during parsing ${error}`)
           },
           {
             trs: false,
@@ -75,14 +80,25 @@ const createHome = () => {
   const readBtn = c('button')
   $(readBtn).addClass(['btn', 'read']).appendTo(container)
 
+  $(readBtn).on('click', (event) => {
+    event.stopPropagation()
+    input.click()
+  })
+
   const span = c('span')
   $(span).appendTo(readBtn).html('Select a file')
 
-  $(readBtn).on('click', (event) => {
+  const author = c('div')
+  $(author).addClass(['author']).appendTo(home)
+
+  const authorSpan = c('span')
+  $(authorSpan).html('by').appendTo(author)
+
+  const link = c('a')
+  $(link).attr('href', 'https://github.com/KallkaGo').html('KallkaGo').appendTo(author).on('click', (event) => {
+    event.preventDefault()
     event.stopPropagation()
-    if (!handleDone) return
-    handleDone = false
-    input.click()
+    Firefly.jumpLink(event.target.href)
   })
 
 }

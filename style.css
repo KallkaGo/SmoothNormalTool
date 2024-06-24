@@ -63,10 +63,6 @@ body,
   right: 0;
   bottom: 0;
   background: #ea4c89;
-  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-    inset -4px -4px 6px 0 rgba(255,255,255,.5),
-    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
   transition: all 0.3s ease;
 }
 .read:before {
@@ -85,6 +81,7 @@ body,
 }
 .read:hover {
   background: transparent;
+  transition: all 0.5s ease;
 }
 .read span:hover {
   color: #ea4c89;
@@ -115,6 +112,22 @@ body,
 }
 .read span:hover:after {
   width: 100%;
+}
+
+.author {
+  position: absolute;
+  right: 35px;
+  bottom: 20px;
+  color: whitesmoke;
+  font-size: 14px;
+  font-weight: bold;
+
+  span {
+    margin-right: 10px;
+  }
+  a{
+    color: violet;
+  }
 }
 
 .hidden {
