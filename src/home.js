@@ -3,13 +3,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/Addons.js'
 import { writeAverageNormalToAttribute } from './misc.js'
 
+let handleDone = true
 const gltfLoader = new GLTFLoader()
-
 const input = document.createElement('input')
 input.type = 'file'
 input.addEventListener('change', (evnet) => {
+  evnet.stopPropagation()
   const file = event.target.files[0]
-  console.log('file', file)
   if (file) {
     const reader = new FileReader()
     reader.onload = function (event) {
@@ -72,10 +72,18 @@ const createHome = () => {
   const container = c('div')
   $(container).addClass(['container abs']).appendTo(home)
 
-  const readBtn = c('div')
-  $(readBtn).addClass(['btn', 'read']).appendTo(container).html('选择文件')
+  const readBtn = c('button')
+  $(readBtn).addClass(['btn', 'read']).appendTo(container)
 
-  $(readBtn).on('click', () => input.click())
+  const span = c('span')
+  $(span).appendTo(readBtn).html('Select a file')
+
+  $(readBtn).on('click', (event) => {
+    event.stopPropagation()
+    if (!handleDone) return
+    handleDone = false
+    input.click()
+  })
 
 }
 
@@ -88,6 +96,7 @@ const saveFile = (data, fileName) => {
   link.download = fileName || 'data.json'
   link.click()
   input.value = ''
+  handleDone = true
 }
 
 export {

@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 html,
@@ -24,27 +25,104 @@ body,
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
 .btn {
   width: 200px;
   height: 70px;
-  border-radius: 12px;
-  background-color: blanchedalmond;
-  line-height: 70px;
-  text-align: center;
-  border: 2px solid #000;
-  font-weight: bold;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  background: transparent;
   cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
 }
 
-.btn:hover {
-  background-color: #e8e6d1;
+.read {
+  background-color: #f0ecfc;
+  background-image: linear-gradient(315deg, #f0ecfc 0%, #ea4c89 74%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 0.9;
 }
-
-.export {
-  margin-top: 20px;
+.read:before,
+.read:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #ea4c89;
+  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
+  transition: all 0.3s ease;
+}
+.read:before {
+  height: 0%;
+  width: 2px;
+}
+.read:after {
+  width: 0%;
+  height: 2px;
+}
+.read:hover:before {
+  height: 100%;
+}
+.read:hover:after {
+  width: 100%;
+}
+.read:hover {
+  background: transparent;
+}
+.read span:hover {
+  color: #ea4c89;
+}
+.read span:before,
+.read span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #ea4c89;
+  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
+  transition: all 0.3s ease;
+}
+.read span:before {
+  width: 2px;
+  height: 0%;
+}
+.read span:after {
+  height: 2px;
+  width: 0%;
+}
+.read span:hover:before {
+  height: 100%;
+}
+.read span:hover:after {
+  width: 100%;
 }
 
 .hidden {
   display: none;
+}
+
+#webgl-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
