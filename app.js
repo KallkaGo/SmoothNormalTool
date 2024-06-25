@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu, shell } = require('electron')
 
-const isDev = app.isPackaged !== 'true'
+const isDev = app.isPackaged !== true
 const path = require('path')
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
@@ -28,8 +28,6 @@ const createWindow = () => {
     } else {
         win.loadFile(path.join(__dirname, 'dist', 'index.html'))
     }
-
-
 }
 app.whenReady().then(() => {
     app.commandLine.appendSwitch('ignore-certificate-errors')
