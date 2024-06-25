@@ -4,14 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  jquery:
-    specifier: ^3.7.1
-    version: 3.7.1
-  three:
-    specifier: ^0.165.0
-    version: 0.165.0
-
 devDependencies:
   electron:
     specifier: ^31.0.2
@@ -19,9 +11,15 @@ devDependencies:
   electron-builder:
     specifier: ^24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
+  jquery:
+    specifier: ^3.7.1
+    version: 3.7.1
   npm-run-all:
     specifier: ^4.1.5
     version: 4.1.5
+  three:
+    specifier: ^0.165.0
+    version: 0.165.0
   vite:
     specifier: ^5.3.1
     version: 5.3.1
@@ -2012,7 +2010,7 @@ packages:
 
   /jquery@3.7.1:
     resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
-    dev: false
+    dev: true
 
   /js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
@@ -2921,7 +2919,7 @@ packages:
 
   /three@0.165.0:
     resolution: {integrity: sha512-cc96IlVYGydeceu0e5xq70H8/yoVT/tXBxV/W8A/U6uOq7DXc4/s1Mkmnu6SqoYGhSRWWYFOhVwvq6V0VtbplA==}
-    dev: false
+    dev: true
 
   /tmp-promise@3.0.3:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}

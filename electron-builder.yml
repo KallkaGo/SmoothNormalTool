@@ -1,0 +1,8 @@
+files:
+  - "!.github/*"
+  - "!.git/*"
+  - "!.vscode/*"
+  - "!.idea/*"
+  - "!demo/*"
+  - "!src/*"
+  - "!{.*,*.ts,*.yml,*.yaml,*.lock,*.log,*.md,*.html,tsconfig.*}"
