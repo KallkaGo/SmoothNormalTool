@@ -37,13 +37,19 @@ function writeAverageNormalToAttribute (mesh) {
     const nor = new THREE.Vector3().fromBufferAttribute(normal, j)
     const tangent = new THREE.Vector4().fromBufferAttribute(tangents, j)
     const tangentVec3 = new THREE.Vector3(tangent.x, tangent.y, tangent.z)
-    const bitangent = (new THREE.Vector3().crossVectors(nor, tangentVec3).multiplyScalar(tangent.w)).normalize()
+    tangentVec3.normalize()
+    const bitangent = nor.clone().cross(tangentVec3).multiplyScalar(tangent.w)
+    bitangent.normalize()
     const tbnMatrix = new THREE.Matrix3().set(
-      tangent.x, tangent.y, tangent.z,
-      bitangent.x, bitangent.y, bitangent.z,
-      nor.x, nor.y, nor.z
+      tangent.x, bitangent.x, nor.x,
+      tangent.y, bitangent.y, nor.y,
+      tangent.z, bitangent.z, nor.z
     )
-    const smoothNormal = avgNorm.applyMatrix3(tbnMatrix).normalize()
+
+    //wToT = the inverse of tToW = the transpose of tToW as long as tToW is an orthogonal matrix
+    tbnMatrix.invert()
+
+    const smoothNormal = avgNorm.clone().applyMatrix3(tbnMatrix).normalize()
     avgNormals[j * 3] = smoothNormal.x
     avgNormals[j * 3 + 1] = smoothNormal.y
     avgNormals[j * 3 + 2] = smoothNormal.z
