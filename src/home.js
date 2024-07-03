@@ -3,9 +3,13 @@ import $ from 'jquery'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/Addons.js'
 import { writeAverageNormalToAttribute } from './misc.js'
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 
 let handleDone = true
 const gltfLoader = new GLTFLoader()
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
+gltfLoader.setDRACOLoader(dracoLoader)
 const input = document.createElement('input')
 input.type = 'file'
 input.addEventListener('change', (evnet) => {
@@ -25,38 +29,46 @@ input.addEventListener('change', (evnet) => {
       const url = URL.createObjectURL(blob)
       gltfLoader.load(url, (gltf) => {
         const model = gltf.scene
-
+        const taskList = []
         model.traverse((child) => {
           if (child.isMesh) {
-            console.log('...', child.name, child)
-            writeAverageNormalToAttribute(child)
+            taskList.push(writeAverageNormalToAttribute(child))
           }
         })
-        // 导出修改后的模型
-        const exporter = new GLTFExporter()
-        exporter.parse(model, function (result) {
 
-          if (result instanceof ArrayBuffer) {
+        Promise.all(taskList).then(() => {
+          // 导出修改后的模型
+          const exporter = new GLTFExporter()
+          exporter.parse(model, function (result) {
 
-            saveFile(new Blob([result], { type: 'application/octet-stream' }), file.name)
+            if (result instanceof ArrayBuffer) {
 
-          } else {
+              saveFile(new Blob([result], { type: 'application/octet-stream' }), file.name)
 
-            const output = JSON.stringify(result, null, 2)
-            saveFile(new Blob([output], { type: 'text/plain' }), file.name)
-          }
+            } else {
 
-        },
-          function (error) {
-            Firefly.showToast(`An error happened during parsing ${error}`)
+              const output = JSON.stringify(result, null, 2)
+              saveFile(new Blob([output], { type: 'text/plain' }), file.name)
+            }
+
           },
-          {
-            trs: false,
-            onlyVisible: true,
-            binary: true,
-            maxTextureSize: 2048,
-          }
-        )
+            function (error) {
+              Firefly.showToast(`An error happened during parsing ${error}`)
+            },
+            {
+              trs: false,
+              onlyVisible: true,
+              binary: true,
+              maxTextureSize: 2048,
+            }
+          )
+        }).catch(() => {
+          Firefly.showToast('Please check whether the model contains position normal and tangent data')
+        }).finally(() => {
+          input.value = ''
+          handleDone = true
+        })
+
       })
     }
     reader.readAsArrayBuffer(file)
@@ -100,6 +112,8 @@ const createHome = () => {
     event.stopPropagation()
     Firefly.jumpLink(event.target.href)
   })
+
+
 
 }
 
