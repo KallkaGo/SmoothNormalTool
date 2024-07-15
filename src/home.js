@@ -35,7 +35,6 @@ input.addEventListener('change', (evnet) => {
             taskList.push(writeAverageNormalToAttribute(child))
           }
         })
-
         Promise.all(taskList).then(() => {
           // 导出修改后的模型
           const exporter = new GLTFExporter()
