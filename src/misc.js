@@ -6,6 +6,12 @@ function writeAverageNormalToAttribute (mesh) {
     const position = mesh.geometry.attributes.position
     const tangents = mesh.geometry.attributes.tangent
     const normal = mesh.geometry.attributes.normal
+    const uv7 = mesh.geometry.getAttribute('_uv7')
+
+    if(uv7){
+      console.log('_uv7 already exists, deleting it');
+      mesh.geometry.deleteAttribute('_uv7')
+    }
 
     if (!tangents) {
       return reject(new Error('No tangents found'))
