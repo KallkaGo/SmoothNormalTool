@@ -8,8 +8,8 @@ function writeAverageNormalToAttribute (mesh) {
     const normal = mesh.geometry.attributes.normal
     const uv7 = mesh.geometry.getAttribute('_uv7')
 
-    if(uv7){
-      console.log('_uv7 already exists, deleting it');
+    if (uv7) {
+      console.log('_uv7 already exists, deleting it')
       mesh.geometry.deleteAttribute('_uv7')
     }
 
@@ -53,6 +53,18 @@ function writeAverageNormalToAttribute (mesh) {
       tangentVec3.normalize()
       const bitangent = nor.clone().cross(tangentVec3).multiplyScalar(tangent.w)
       bitangent.normalize()
+
+      /* 
+      in threejs
+  
+      https://threejs.org/docs/index.html#api/zh/math/Matrix3
+
+      in glsl
+
+      https://relativity.net.au/gaming/glsl/Variables.html
+      */
+
+
       const tbnMatrix = new THREE.Matrix3().set(
         tangent.x, bitangent.x, nor.x,
         tangent.y, bitangent.y, nor.y,
