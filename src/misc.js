@@ -79,6 +79,13 @@ function writeAverageNormalToAttribute (mesh) {
       avgNormals[j * 3 + 1] = smoothNormal.y
       avgNormals[j * 3 + 2] = smoothNormal.z
     }
+    /* 
+    The custom attitude attribute in GLTFExporter will be prefixed with "_", e.g. "_uv7" in the case of "uv7" attribute.
+
+    See:
+    https://github.com/mrdoob/three.js/blob/dcb30fd11276a14255155f3cb6eb3345622c9aef/examples/jsm/exporters/GLTFExporter.js#L1727
+    
+    */
     mesh.geometry.setAttribute('uv7', new THREE.BufferAttribute(avgNormals, 3))
     return resolve('done')
   })
